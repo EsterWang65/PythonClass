@@ -1,5 +1,6 @@
 import random
 import pyinputplus as pyip
+import csv
 
 def getStudents(stuNum:int,scoreNum:int) -> list[list]:
     '''
@@ -21,14 +22,16 @@ def getStudents(stuNum:int,scoreNum:int) -> list[list]:
         students.append(stu)
 
     return(students)
-# def saveToCSV(fileName:str,data:list:list[list]) -> None:
-#     fileName += ".csv"
-#     print("檔案名稱：",fileName)
-#     print("資料：",data)
+def saveToCSV(fileName:str,data:list[list]) -> None:
+    fileName += ".csv"
+    with open(fileName,mode = 'w',encoding = 'utf-8',newline='') as file:
+        writer = csv.writer(file)
+        writer.writerows(data)
 
 
 if __name__ == "__main__":
     stuNum:int = pyip.inputInt("請輸入學生人數(1~50)：",min = 1,max = 50) 
     scoreNum:int = pyip.inputInt("請輸入科目數(1~7)：",min = 1,max = 7)
     students:list[list] = getStudents(stuNum,scoreNum) 
-    # saveToCSV(fileName="abc",data=students)
+    fileName = pyip.inputFilename("請輸入檔案名稱(不用輸入副檔名稱)：")
+    saveToCSV(fileName=fileName,data=students)
