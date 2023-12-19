@@ -1,5 +1,5 @@
 import pyinputplus as pyip
-from tools import getStudents,saveToCSV
+from outter.tools import getStudents,saveToCSV
 
 
 if __name__ == "__main__":
