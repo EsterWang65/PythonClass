@@ -1,5 +1,6 @@
 import pyinputplus as pyip
-from outter.tools import getStudents,saveToCSV
+from outter import getStudents  #此function在outter中的__init__.py中
+from outter.tools import saveToCSV  #此function在outter中的tools.py中
 
 
 if __name__ == "__main__":
