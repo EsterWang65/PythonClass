@@ -1,41 +1,30 @@
-import random  #注意記得匯入module
-import pyinputplus as pyip
+from random import randint,choices  #注意記得匯入module
 import csv
 
-def getStudents(stuNum:int,scoreNum:int) -> list[list]:
-    '''
-    參數：stuNum代表學生人數；\n
-    參數：scoreNum代表科目數。
-    '''
-
+def getStudents(nameNum:int) -> list[dict]:
+    students:list[dict] = []
     with open("names.txt","r",encoding = "utf-8") as f:
         name:str = f.read()
     nameList:list[str] = name.split('\n')
-
-    students:list[list] = []
-    names:list[str] = random.choices(nameList,k = stuNum)
-    for name in names:
-        stu:list[int|str] = []
-        stu.append(name)
-        for score in range(scoreNum):
-            stu.append(random.randint(40,100))
+    names:list[str] = choices(nameList, k = nameNum)
+    for i in range(len(names)):
+        stu = {
+        "姓名":names[i],
+        "國文":randint(45,100),
+        "英文":randint(45,100),
+        "數學":randint(45,100),
+        "地理":randint(45,100),
+        "歷史":randint(45,100)
+        }
         students.append(stu)
 
-    return(students)
+    return students
 
-def saveToCSV(fileName:str,data:list[list],subjectNum:int) -> bool:
-    fileName += ".csv"
-    subject = [f"科目{i+1}" for i in range(subjectNum)]
-    fields = ["姓名"]
-    fields.extend(subject)
-    with open(fileName,mode = 'w',encoding = 'utf-8',newline='') as file:
-        try:
-            writer = csv.writer(file)
-            # fields = None
-            writer.writerow(fields)
-            writer.writerows(data)
-        except:
-            return False
-        else:
-            return True
-
+def save_to_csv(students:list[dict],fileName:str) -> None:
+    fileNameWithExtension:str = fileName + ".csv"
+    with open(fileNameWithExtension,mode = 'w',encoding = "utf-8",newline = '') as f:
+        fieldnames = ["姓名","國文","英文","數學","地理","歷史"]
+        writer = csv.DictWriter(f,fieldnames = fieldnames)
+        writer.writeheader()
+        writer.writerows(students)
+    print("寫入成功")
