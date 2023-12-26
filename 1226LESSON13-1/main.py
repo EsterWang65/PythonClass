@@ -10,6 +10,6 @@ if __name__ == "__main__":
     fileName = pyip.inputFilename("請輸入檔案名稱(不用輸入副檔名稱)：")
     format = pyip.inputChoice(['1','2'],"請問要輸出哪一個格式\n按1.excel\n按2.csv\n請選擇：")
     if format == '1':
-        print("儲存為excel檔")
+        tools.save_to_excel(students,fileName)
     else:
         tools.save_to_csv(students,fileName)
