@@ -1,5 +1,6 @@
 from random import randint,choices  #注意記得匯入module
 import csv
+from openpyxl import Workbook
 
 def getStudents(nameNum:int) -> list[dict]:
     students:list[dict] = []
@@ -31,7 +32,19 @@ def save_to_csv(students:list[dict],fileName:str) -> None:
 
 def save_to_excel(students:list[dict],fileName:str) -> None:
     fileNameWithExtension:str = fileName + ".xlsx"
-    with open(fileNameWithExtension,mode = 'w',encoding = "utf-8",newline = '') as f:
-        print(f"檔案名是：{fileNameWithExtension}")
-        print(students)
-    print("寫入成功")
+    print(f"檔案名是{fileNameWithExtension}")
+    print(students)
+    wb = Workbook()
+    ws = wb.active
+    ws.title = fileName
+    ws['A1'] = "姓名"  
+    ws['B1'] = "國文"
+    ws['C1'] = "英文"
+    ws['D1'] = "數學"
+    ws['E1'] = "地理"
+    ws['F1'] = "歷史"
+    for student in students:
+        studentData:list = list(student.values())
+        print(studentData) 
+        ws.append(studentData)
+    wb.save(fileNameWithExtension)
